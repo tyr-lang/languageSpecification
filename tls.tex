@@ -81,9 +81,9 @@ frameshape={nnn}{n}{n}{nyn},
     stringstyle=\rmfamily,%
 }%
 
-\title{The SKilL Language V1.0}
+\title{The Tyr Programming Language}
 \author{Timm Felden}
-\date{TR 2017/01}
+\date{\today}
 
 \makeglossaries
 \include{glossary}
@@ -92,8 +92,8 @@ frameshape={nnn}{n}{n}{nyn},
 \maketitle
 
 \begin{abstract}
-This document defines the Tyr, a research language for type-oriented programming.
-Type oriented programming is a paradigm that extends on object-oriented programming.
+This document defines Tyr, a research language for type-oriented programming.
+Type-oriented programming is a paradigm that extends on object-oriented programming.
 In type-oriented languages, types are first order values like integers and objects.
 An existing but primitive form of type orientation is the Java reflection API.
 \end{abstract}
@@ -109,6 +109,10 @@ For Pony!
 \newpage
 \part{Core Language}
 \label{part:spec}
+
+\input{parts/introduction}
+\input{parts/syntax}
+\input{parts/semantics}
 
 var/val:
   fields
@@ -173,7 +177,6 @@ Iterator <: IterableOnce
 
 
 
-\input{parts/introduction}
 
 \newpage
 \part{Appendix}
