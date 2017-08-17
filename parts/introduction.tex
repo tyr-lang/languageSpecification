@@ -10,3 +10,17 @@ As such, TOP implies OOP.
 Tyr is a programming language created to explore this idea in practice.
 Tyr as a language is a descendant of C++ and Scala.
 In order to examine consequences of TOP for resource management, Tyr features manual memory management.
+
+
+\subsection{On OOP and TOP}
+
+TOP has no point without OOP for the following reason:
+
+\begin{lstlisting}
+type A;
+type B;
+
+val x = new (if(phi) A else B)();
+\end{lstlisting}
+
+What could be the type of x if not $A \sqcap B$?

@@ -1,3 +1,37 @@
 \section{Syntax}
 
-The syntax of Tyr is inspired by Scala.
+The syntax of Tyr is inspired by Scala and SKilL.
+
+
+\subsection{Literals}
+
+
+\begin{figure}
+	\begin{grammar}
+		<int> ::= ('0'-'9')+
+		
+		<hex> ::= ('0'-'0'|'A'-'F'|'a'-'f')+
+		
+		<Integer> ::= '-'? <int> ('i' <int>?)?
+		
+		<HexInteger> ::= "0x" <hex> ('i' <int>?)?
+		
+		<long> ::= '-'? <int> 'L'
+		
+		<Float> ::= '-'? <int>? '.' <int> (('e'|'E') '-'? <int>)? ('f' <int>?)?
+		
+		<string> ::= '\verb|"|' \textasciitilde['\verb|"|']* '\verb|"|'
+		
+		<Identifier> ::= '\verb|`|' \textasciitilde['\verb|`|']+ '\verb|`|'
+	\end{grammar}
+	\caption{Literals}
+	\label{fig:syn:literals}
+\end{figure}
+
+\subsection{Grammar}
+
+\subsubsection{Top Level Structure}
+
+\subsubsection{Members}
+
+\subsubsection{Expressions}

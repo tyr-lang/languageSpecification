@@ -1,3 +1,30 @@
 \section{Semantics}
 
 The semantics of Tyr is loosely based on C++ and Scala.
+
+\subsection{Types of literal Values}
+\todo{sind die ints nicht in wahrheit LiteralInt?}
+
+The type of <Integer> is \texttt{int}, if no 'i' or no number behind the 'i' is supplied.
+If a number is supplied, the number will be used as argument for \texttt{Integer}(n).
+If the resulting Type has a named subtype in \texttt{tyr.lang}, the subtype will be chosen.
+Hence, \texttt{0i8} is a \texttt{byte} of value 0.
+Also, \texttt{0}, \texttt{0i} and \texttt{0i32} are indistinguishable.
+
+The type of <HexInteger> is UnsignedInteger(n), where n is the number supplied via 'i' defaulting to 32.
+
+The type of <long> is \texttt{long}.
+
+The type of <Float> is analogous to <Integer> except that it is based on \texttt{FloatingPoint}(n) and defaults to \texttt{double}.
+The type is \texttt{float} if a single \texttt{f} is supplied.
+This rule is designed to be compatible with common programming languages.
+
+The type of <string> is \texttt{LiteralString}.
+
+<Identifier> literals yield identifiers.
+An identifier is neither a type nor a value.
+
+\subsection{Unescaping of String and Identifier Literals}
+
+Tyr uses the same escaping mechanism as Java.
+Unescaping happens for <string> and <identifier> before further processing.
