@@ -1,0 +1,196 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{xltxtra}
+\usepackage{polyglossia}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[linkbordercolor={1 1 0}]{hyperref}
+\usepackage[marginpar]{todo}
+%lightning symbol
+\usepackage{stmaryrd}
+
+\usepackage[acronym,toc]{glossaries}
+
+%nice quotes for parts
+\usepackage{epigraph}
+
+%table placement
+\usepackage{float}
+
+%used by grammar
+\usepackage{syntax}
+\setlength{\grammarindent}{3.8cm}
+
+
+%used by code samples
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{keywords}{HTML}{000088}
+\definecolor{comments}{HTML}{409940}
+
+
+\usepackage{subcaption}
+
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{0.983\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,mindmap,shapes.multipart}
+\usepackage{pgfplots}
+\usetikzlibrary{external}
+\tikzexternalize[prefix=tikz/]
+\tikzset{external/up to date check=diff}
+
+\setromanfont[Mapping=tex-text]{Linux Libertine O}
+% \setsansfont[Mapping=tex-text]{DejaVu Sans}
+% \setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
+
+%paragraph numbering and toc availability
+%\usepackage{titlesec}
+%\titleformat{\paragraph}
+%{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+%\titlespacing*{\paragraph}
+%{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{2}
+
+%funny makros we want to use
+\newcommand{\den}[1]{\ensuremath{[\![#1]\!]}}
+\DeclareMathOperator*{\bigConcat}{\bigcirc}
+
+%skill language definition
+\lstdefinelanguage{skill}
+{morekeywords={interface,typedef,enum,include,with,with,extends,annotation,const,custom,view,as,auto,map,list,set,i1,i8,i16,i32,i64,v64,string,bool,f32,f64},
+breakatwhitespace=true,
+   breaklines=true,      
+sensitive=false,
+morecomment=[s]{/*}{*/},
+morestring=[b]",
+frameshape={nnn}{n}{n}{nyn},
+}
+\lstset{emph={%  
+    tagged,class,indexed%
+    },emphstyle={\color{red}\bfseries\underbar},%
+    keywordstyle=\color{keywords}\bfseries,%
+    basicstyle=\normalfont\ttfamily,%
+    commentstyle=\color{comments}\ttfamily,%
+    stringstyle=\rmfamily,%
+}%
+
+\title{The SKilL Language V1.0}
+\author{Timm Felden}
+\date{TR 2017/01}
+
+\makeglossaries
+\include{glossary}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document defines the Tyr, a research language for type-oriented programming.
+Type oriented programming is a paradigm that extends on object-oriented programming.
+In type-oriented languages, types are first order values like integers and objects.
+An existing but primitive form of type orientation is the Java reflection API.
+\end{abstract}
+
+\renewcommand{\abstractname}{Acknowledgements}
+\begin{abstract}
+For Pony!
+\end{abstract}
+
+\tableofcontents
+
+% main parts of the document
+\newpage
+\part{Core Language}
+\label{part:spec}
+
+var/val:
+  fields
+  type var -> type field (in vtable)
+
+defs:
+ def -> virtual
+ static def -> static type (ada non-poly pointer)
+ type def -> type method
+
+
+Typen:
+ Any (top)
+ void (<: Any)
+ bool
+ Integer
+ int
+ byte
+ long
+ UnsignedInteger
+ FloatingPoint
+ float
+ double
+ pointer
+ 
+class Object <: pointer
+  String <: Object
+  IterableOnce <: String
+  Iterable <: IterableOnce
+  Option <: Iterable
+  Seq <: Iterable
+  Array <: Iterable
+
+
+\part{Compilation}
+
+modules,
+source paths,
+modules scopes,
+default scopes,
+
+
+module naming convention:
+<organization>.<project>
+tyr.lang
+tyr.system
+tyr.collection
+skill.common
+
+
+\part{Collections}
+
+IterableOnce(T : Type)
+- static def for (p, b)
+- def foreach (f : LocalLambda[-> T])
+
+Iterator <: IterableOnce
+- empty()
+- move() : bool
+- get()
+- for (p, b) = if(!empty) do {}
+
+
+
+\input{parts/introduction}
+
+\newpage
+\part{Appendix}
+%makes appendix count from A
+\newcounter{myc}[part]
+\renewcommand{\thesection}{\Alph{myc}}
+\let\osection\section
+\renewenvironment{section}{\stepcounter{myc}\osection}
+
+\newpage
+\printglossaries
+
+\small{
+    \bibliographystyle{alpha}
+    \bibliography{skill}
+}
+
+\todos
+
+\end{document}
