@@ -167,6 +167,12 @@ skill.common
 
 \section{IO}
 
+ - Path (VFS)
+ - File (cfile)
+ - MappedFile (mmap)
+ - Console
+
+
 \section{Collections}
 
 IterableOnce(T : Type)
@@ -179,6 +185,48 @@ Iterator <: IterableOnce
 - get()
 - for (p, b) = if(!empty) do {}
 
+EquivalenceRelation(T : Type)
+- equals(T, T) : bool
+- hash(T) : int
+
+MinimalEQR <: EquivalenceRelation
+- equals := ==
+- hash := .to(Int)
+
+Iterable <: IterableOnce
+
+Seq <: Iterable
+
+Array <: Seq
+
+ArrayBuffer <: Seq
+
+StringBuffer <: Seq(String)
+
+List <: Seq
+
+LinkedList <: List
+
+Set <: Seq
+
+HashSet(T : Type <: CT, Eq : Type(EquivalenceRelation) <: CT = MinimalEQR) <: Set
+
+Map <: Iterable
+
+HashMap(K : Type <: CT, V : Type <: CT, Eq : Type(EquivalenceRelation(K)) <: CT) <: Set
+
+\section{Threads}
+
+- Thread
+- ThreadPool
+- Semaphore
+- Mutex
+- Barrier
+
+\section{Native}
+
+-C method placement
+-C++ method placement?
 
 
 
