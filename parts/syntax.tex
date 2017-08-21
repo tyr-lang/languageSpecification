@@ -43,3 +43,35 @@ The syntax of Tyr is inspired by Scala and SKilL.
 \subsubsection{Members}
 
 \subsubsection{Expressions}
+
+- es muss simpleExpressions geben, die für typen und einfache ausdrücke verwendet wird
+- es muss literalExpressions geben, die ausdrücke ohne berechnungen enthalten, wie etwa Typnamen; literalExpressions enthalten keine operatoren, sind also vor dem OperatorBinding-Schritt auswertbar
+- statements sind expressions, aber keine simpleExpressions
+- blöcke sind in diesem sinne wie statements
+- d.h. wird eine expression erwartet kann man einen block als ({...}) unterbringen, nicht aber als {...}.
+
+\subsection{Examples}
+
+\begin{verbatim}
+def foreach (p : BlockParameter(Any), b : Block(void)) {
+  while(move()) {
+	p = get();
+	b();
+  }
+}
+def forall (p : BlockParameter(Any), b : Block(bool)) : bool = {
+  while(move()) {
+    p = get();
+    if(!b())
+      return false;
+  }
+  return true;
+}
+
+test "usage" {
+  foreach x do {
+    print(x)
+  }
+  println(forall x do { x != null; })
+}
+\end{verbatim}
