@@ -28,3 +28,11 @@ An identifier is neither a type nor a value.
 
 Tyr uses the same escaping mechanism as Java.
 Unescaping happens for <string> and <identifier> before further processing.
+
+
+\subsection{Access Paths introduced by local \texttt{with}}
+
+Any experession that yields a scope can be imported with a with.
+This import results in an access path to the names imported into the local scope.
+If that access has a side effect, the effect may be executed at every access to the scope.
+Function with an implicit \texttt{this} parameter start with an implicit \texttt{with this;} expression.
