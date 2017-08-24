@@ -36,3 +36,12 @@ Any experession that yields a scope can be imported with a with.
 This import results in an access path to the names imported into the local scope.
 If that access has a side effect, the effect may be executed at every access to the scope.
 Function with an implicit \texttt{this} parameter start with an implicit \texttt{with this;} expression.
+
+
+\subsection{Types and Classes}
+
+\subsubsection{Representation of Objects}
+
+Rule: only conversions and instances of types with known representation are legal, i.e. there cannot be a variable/result/parameter of type Any.
+Note to self: There is a backdoor using type variables?
+What about p = block : Block[Any]?

@@ -1,0 +1,54 @@
+\section{Properties}
+
+Properties are special non-instantiable types that can be inherited by other types but that will not be inherited by their subtypes.
+Properties can be used wherever an inheritance operator is legal.
+Their meaning is given by external tools.
+The Language defines several properties that are used to influence the behaviour of the Tyr compiler.
+Properties can be compared to attributes in C++ or annotations in Java.
+
+\subsection{Predefined Properties}
+
+\subsubsection{native}
+States that the defined entity is implemented by the compiler.
+If the defined entity is unknown to the compiler, an error will be issued and compilation will be aborted without producing a result.
+
+\paragraph{Usage Restrictions}
+Only types, classes and type members.
+
+
+\subsubsection{CT}
+Requires, that the value stored in the entity is a compile time constant.
+For instance, an integer literal or the name of a type can be supplied.
+This property is used to allow compile-time evaluation of type-level functions.
+
+\paragraph{Usage Restrictions}
+Variables, parameters, values.
+
+
+\subsubsection{covariant}
+$\texttt{type T(V : Type <: covariant)} \Rightarrow \forall u,v \in \texttt{Type}. u <: v \Rightarrow T(u) <: T(v)$.
+This means that results of a type-level function use an inheritance hierarchy that equals their arguments.
+
+\paragraph{Usage Restrictions}
+Type parameters.
+
+
+\subsubsection{contravariant}
+
+$\texttt{type T(V : Type <: covariant)} \Rightarrow \forall u,v \in \texttt{Type}. u <: v \Rightarrow T(v) <: T(u)$.
+This means that results of a type-level function use an inheritance hierarchy that equals the opposite of their arguments.
+
+\paragraph{Usage Restrictions}
+Type parameters.
+
+
+\subsubsection{generic}
+States that only one implementation should be used to represent all values for a given type variable, i.e. the type variable is only used for type checking.
+The representation will use the super type of the type variable.
+
+\paragraph{Usage Restrictions}
+Type parameters with a super type with known representation.
+
+\subsubsection{public}
+\subsubsection{protected}
+\subsubsection{private}
