@@ -37,6 +37,23 @@ This import results in an access path to the names imported into the local scope
 If that access has a side effect, the effect may be executed at every access to the scope.
 Function with an implicit \texttt{this} parameter start with an implicit \texttt{with this;} expression.
 
+\subsection{Scopes}
+
+\todo{das folgende ergibt keinen sinn, weil es einfach nicht richtig ist. Gibt es unterschiedliche parents für werte und für scopes? was machen dann imports?}
+
+Scope access happens via the dot-Operator ('.').
+Scopes form a tree.
+The root is called \texttt{\_root\_}.
+
+Lookup is done starting from the current scope ascending to the parent and stops at root.
+The parent of a value is its type.
+
+If a scope is imported via a \texttt{with}-clause, imported scopes are addressed before ascending into parents.
+If an imported scope is evaluated, parent scopes will be followed until a scope is encountered that does not belong to a user defined entity, i.e. that is a pure namespace.
+This rule ensures that importing a type makes operations from its super types visible but not from its enclosing scope.
+
+
+
 
 \subsection{Types and Classes}
 

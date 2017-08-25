@@ -1,0 +1,18 @@
+Compilation of Tyr source code is done on a per-module basis.
+A module is a set ouf source files with a common name.
+Modules can be compared to JARs in Java or libraries in C and other languages.
+
+\section{Module Specification}
+
+A module must specify a name, a source directory and a set of modules it depends on.
+The name of the module must not collide with any transitive dependency.
+The source directory contains all sources that will be considered.
+The implicit scopes created by subdirectories are relative to the source directory.
+The dependencies must not depend transitively on this module.
+There is an implicit dependency to \texttt{tyr.lang} for all modules except \texttt{tyr.lang}.
+
+The name of a module creates corresponding scopes.
+I.e. a definition inside the source directory of \texttt{tyr.lang} is a member of the scope \texttt{tyr.lang}.
+Module names, like scope names, are all lower case.
+The naming convention for modules is \textit{<organization>}.\textit{<project>}.
+Examples are \texttt{tyr.lang}, \texttt{tyr.collection} or \texttt{skill.common}.
