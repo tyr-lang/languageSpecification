@@ -39,20 +39,37 @@ Function with an implicit \texttt{this} parameter start with an implicit \texttt
 
 \subsection{Scopes}
 
-\todo{das folgende ergibt keinen sinn, weil es einfach nicht richtig ist. Gibt es unterschiedliche parents für werte und für scopes? was machen dann imports?}
-
 Scope access happens via the dot-Operator ('.').
 Scopes form a tree.
 The root is called \texttt{\_root\_}.
-
-Lookup is done starting from the current scope ascending to the parent and stops at root.
-The parent of a value is its type.
 
 If a scope is imported via a \texttt{with}-clause, imported scopes are addressed before ascending into parents.
 If an imported scope is evaluated, parent scopes will be followed until a scope is encountered that does not belong to a user defined entity, i.e. that is a pure namespace.
 This rule ensures that importing a type makes operations from its super types visible but not from its enclosing scope.
 
+\todo{if an import ends with an \texttt{\_all\_} then all members of the target entity will be imported}
 
+\paragraph{Dynamic Lookup} The first lookup strategy is called dynamic lookup and is always applied first.
+It searches the scope of the target entity.
+The scope of a value is its static type.
+The scope and its imports are queried.
+If no result can be found, the super types/classes are queried recursively.
+If no results can be found, the super interfaces are queried.
+\todo{specify that super types are linearized in topological order to prevent distant interfaces shadowing closer interfaces; note to self: in order to keep memory complexity of this feature linear, we have to assign numbers in a single pass before looking at expressions; evluation is performed by a heap containing all unevaluated super types; the key in the heap is said number}
+
+
+\paragraph{Static Lookup} If dynamic lookup failed, a static lookup is performed.
+This lookup follows the scope tree, including imports done by the scope.
+If this lookup fails at \texttt{\_root\_}, a single flat lookup in \texttt{tyr.lang} is performed.
+
+
+\subsubsection{Overloading and Overriding}
+
+Find a good rule for near and perfect matches and function application.
+Note to self: The first call following a member access has to be evaluated before the member access!
+
+There is a function lookup mode that applies if the member access is followed by a call or in the case of operator usage.
+This mode yields a set of results. \todo{rules?}
 
 
 \subsection{Types and Classes}
