@@ -35,7 +35,19 @@ Unescaping happens for <string> and <identifier> before further processing.
 Any experession that yields a scope can be imported with a with.
 This import results in an access path to the names imported into the local scope.
 If that access has a side effect, the effect may be executed at every access to the scope.
-Function with an implicit \texttt{this} parameter start with an implicit \texttt{with this;} expression.
+Function with an implicit \texttt{this} parameter start with an implicit expression "\texttt{with this;}".
+The last part of an import expression must be an identifier that is used to create a name in the scope that the import occurs in.
+
+\begin{lstlisting}[language=tyr]
+with tyr.lang; // legal, makes name lang accessible
+with lang.int; // legal, makes tyr.lang.int accessible under name int
+with 7.toString(); // illegal, last part is a method
+with 7.toString().bytes; // legal, will make the bytes of the string "7" accessebile under the name bytes; note: the call will be reevaluated on each usage
+with 7.type; // legal, makes tyr.lang.LiteralInt available unter the name type
+with "".type; // illegal, because the name type is already used in this scope (previous import)
+with "".class; // legal
+\end{lstlisting}
+
 
 \subsection{Scopes}
 
@@ -63,6 +75,12 @@ This lookup follows the scope tree, including imports done by the scope.
 If this lookup fails at \texttt{\_root\_}, a single flat lookup in \texttt{tyr.lang} is performed.
 
 
+\subsubsection{Namespaces}
+
+There is only one namespace for all kinds of named entities.
+In a lookup, fields count like parameterless methods.
+
+
 \subsubsection{Overloading and Overriding}
 
 Find a good rule for near and perfect matches and function application.
@@ -70,6 +88,19 @@ Note to self: The first call following a member access has to be evaluated befor
 
 There is a function lookup mode that applies if the member access is followed by a call or in the case of operator usage.
 This mode yields a set of results. \todo{rules?}
+The evaluation of a member access in a simple expression yields a distance ordered non-empty sequence of results.
+Parameterless entities are at the first position.
+Only one parameterless entity will be presented, as it will shadow any other entity anyway.
+If the user of the member access expects a single entry, the first element of that sequence is chosen.
+Otherwise a matching element can be picked.
+
+\todo{Single result? Implicit conversions?}
+
+\begin{lstlisting}[language=tyr]
+- 7 == -7;
+int.`-`(7) == -7;
+int.`-` 7 == -7;  // name resolution error?
+\end{lstlisting}
 
 
 \subsection{Types and Classes}
@@ -79,3 +110,17 @@ This mode yields a set of results. \todo{rules?}
 Rule: only conversions and instances of types with known representation are legal, i.e. there cannot be a variable/result/parameter of type Any.
 Note to self: There is a backdoor using type variables?
 What about p = block : Block[Any]?
+
+\subsubsection{Static and Dynamic Type of an Expression}
+
+The static type of an expression can be accessed via the field \texttt{type}.
+The dynamic type of an expression can be accessed via the field \texttt{class}.
+The dynamic type is only available for Objects.
+In a type safe program, the statement $\forall x. x\texttt{.class} <: x\texttt{.type}$ is true.
+For the sake of symmetry, expressions argument to an access of \texttt{type} will be evaluated.
+
+\subsection{Tests}
+
+Tests are methods in a class that have no surrounding instance, i.e. static methods.
+They have no name and will not be exported to other modules or to runnable programms.
+Tests can violate arbitrary visibility rules to simplify test code.

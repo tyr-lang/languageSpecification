@@ -1,0 +1,25 @@
+\section{Elaboration of Compilation Steps}
+
+In this section the order and strategy of elaboration of compilation steps will be discussed.
+
+\subsection{Overview of Phases}
+
+\begin{enumerate}
+	\item Parsing: per pile (text -> AST)
+	\item Module AST: merge ASTs into a module AST
+	\item Import Resolution: Resolve imports, check for duplicate names in a scope, resolve all-imports.
+	\item Global and Member aggregation: Collect names and types of visible entities defined in global scopes and type/class/... members.
+	\item Create evaluation order for the next step; abort and report cycles if any.
+	\item Name, Type and Operator Resolution: Bind names, infer and check types, turn operator applications into calls.
+	\item Property checks: Abstract, Native
+	\item Access Checks: Check visibility
+	\item Removal of Block Parameters: Inline methods taking block parameters.
+	\item Removal of Imports: Remove all entities introduced for implicit scope access via imports.
+	\item Shadow Checks: Calculate warnings for shadowed entities
+	\item IR generation: Create tl-file that can be passed to other compilations or the code generator.
+\end{enumerate}
+
+
+\subsection{Removal of Block Parameters}
+This step may introduce illegal usage of internal state.
+Hence, access checks must happen before.

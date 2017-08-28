@@ -26,3 +26,50 @@ val x = new (if(phi) A else B)();
 \end{lstlisting}
 
 What could be the type of x if not $A \sqcap B$?
+
+
+\subsection{Guiding Principle in the Design of Tyr}
+
+This section will explain several principles influencing the language design of Tyr.
+
+\subparagraph{Do not define wrong properties.}
+
+For instance, literals have a value and, hence, have a single type.
+As for all types, the type of a literal must be a subtype of whatever the value of the literal is assigned to.
+Likewise, the \texttt{null} pointer is an instance of each pointer type.
+Therefore, there must be a bottom type of the pointer sublatice with \texttt{null} as its single instance.
+
+\subparagraph{Flexibility of a language is the source of good library design.}
+
+It is perfectly sane to write a type, that enriches strings with a postfix operator allowing their execution as a process in a terminal.
+Also, as a more common example, collections should allow adding objects via \texttt{+}.
+
+
+\subparagraph{It is not the duty of a language to ensure sanity or beauty of source code.}
+
+If a programmer calls his variable \verb|`\n`| he is likely an idiot.
+On the other hand, he could be writing a test for a source code manipulation program.
+
+There is no point in preventing idiotic behaviour at the cost of flexibility.
+Also, there is no objective measure of idiotic behaviour.
+Hence, it should not be prevented by a programming language.
+
+
+\subparagraph{No real language is type safe.}
+
+It is the purpose of type systems to show obvious problems and to give the programmer an understanding of program behaviour.
+Hence, a programmer may choose to violate the type system arbitrarily.
+
+For instance, if a language allows programers to use the POSIX mmap related funcitons, he can violate basically any guarantee given by a language.
+
+
+\subparagraph{Weak typing is for weak programmers.}
+
+A type system is used to ensure that values have the properties a programer wants to make use of.
+There is no point in deferring this check to runtime other than making weak programmers think their program is not as bad as it is.
+
+
+\subparagraph{Pure languages are for poor programmers.}
+
+Writing programs is about modifying the state of a computer.
+The state of a computer is unrelated to mathematics in general.

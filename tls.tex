@@ -64,11 +64,23 @@
 
 %skill language definition
 \lstdefinelanguage{skill}
-{morekeywords={interface,typedef,enum,include,with,with,extends,annotation,const,custom,view,as,auto,map,list,set,i1,i8,i16,i32,i64,v64,string,bool,f32,f64},
+{morekeywords={interface,typedef,enum,include,with,extends,annotation,const,custom,view,as,auto,map,list,set,i1,i8,i16,i32,i64,v64,string,bool,f32,f64},
 breakatwhitespace=true,
    breaklines=true,      
 sensitive=false,
 morecomment=[s]{/*}{*/},
+morestring=[b]",
+frameshape={nnn}{n}{n}{nyn},
+}
+
+%tyr language definition
+\lstdefinelanguage{tyr}
+{morekeywords={type,class,interface,property,with,var,val,def,test,if,else,for,while,do,return},
+breakatwhitespace=true,
+breaklines=true,      
+sensitive=true,
+morecomment=[s]{/*}{*/},
+morecomment=[l]{//},
 morestring=[b]",
 frameshape={nnn}{n}{n}{nyn},
 }
@@ -110,6 +122,8 @@ Inherits from Ada, C++, Java, Scala, SKilL.
 \newpage
 \part{Core Language}
 \label{part:spec}
+
+\todo{fix wording for scope/package/module/library}
 
 \input{parts/introduction}
 \input{parts/syntax}
