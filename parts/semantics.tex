@@ -51,13 +51,19 @@ with "".class; // legal
 
 \subsection{Scopes}
 
+As a consequence of assigning a type to any semantic entity, any entity is a scope.
+
 Scope access happens via the dot-Operator ('.').
-Scopes form a tree.
+The static parent relationship of scopes forms a tree.
 The root is called \texttt{\_root\_}.
 
 If a scope is imported via a \texttt{with}-clause, imported scopes are addressed before ascending into parents.
 If an imported scope is evaluated, parent scopes will be followed until a scope is encountered that does not belong to a user defined entity, i.e. that is a pure namespace.
 This rule ensures that importing a type makes operations from its super types visible but not from its enclosing scope.
+
+Including inheritance, scopes form a DAG.
+Imports are not transitive.
+Therefore, the set of visible entities can be enumerated using recursive descent on the scope DAG.
 
 \todo{if an import ends with an \texttt{\_all\_} then all members of the target entity will be imported}
 
