@@ -2,6 +2,36 @@
 
 The syntax of Tyr is inspired by Scala and SKilL.
 
+\subsection{Keywords, Operators and Identifiers}
+
+Keywords in Tyr are:
+\begin{center}
+do
+	\quad def
+	\quad else
+	\quad for
+	\quad if
+	\quad return
+	\quad val
+	\quad var
+	\quad while
+	\quad with
+\end{center}
+Operator Keywords are:
+\begin{center}
+ :
+\quad <:
+\quad :=	
+\end{center}
+
+Keywords can in no context be used as identifiers or operators.
+They can be made available by using literal identifiers.
+
+Operators and identifiers are can name function declarations that are treated diffirently when it comes to their invocation.
+There are no other differences.
+Literal identifiers containing only operator symbols can be matched by equivalent operator invocations in an expression.
+
+Note that identifiers like \texttt{type} or \texttt{class} can be used as identifiers because they can only appear in situations where other identifiers are illegal.
 
 \subsection{Literals}
 
@@ -23,6 +53,8 @@ The syntax of Tyr is inspired by Scala and SKilL.
 		<string> ::= '\verb|"|' \textasciitilde['\verb|"|']* '\verb|"|'
 		
 		<Identifier> ::= '\verb|`|' \textasciitilde['\verb|`|']+ '\verb|`|'
+		
+		<Operator> ::= ???
 	\end{grammar}
 	\caption{Literals}
 	\label{fig:syn:literals}
@@ -34,11 +66,28 @@ The syntax of Tyr is inspired by Scala and SKilL.
 
 \begin{figure}
 	\begin{grammar}
-		<file> ::= ???
+		<file> ::= <scopeImport>* <typeDeclaration>+
+		
+		<scopeImport> ::= "with" <simpleExpression> ';'?
+		
+		<typeDeclaration> ::= "type" <staticTypeDeclaration>
+		\alt "class" <classDeclaration>
+		\alt "interface" <interfaceDeclaration>
+		\alt "property" <propertyDeclaration>
+		
+		<staticTypeDeclaration> ::= <Identifier> <typeExtension>? <typeBody>
+		
+		<classDeclaration> ::= <Identifier> <typeExtension>? <typeBody>
+		
+		<interfaceDeclaration> ::= <Identifier> <typeExtension>? <typeBody>
+		
+		<propertyDeclaration> ::= <Identifier> <typeBody>
 	\end{grammar}
-	\caption{Literals}
+	\caption{Top Level Structure}
 	\label{fig:syn:top:level}
 \end{figure}
+
+\todo{property mit type body wirkt irgendwie komisch; sollte es nicht eher ohne body, dafür aber mit parametrn/extension sein? sollten properties nicht funktional/tupel sein?}
 
 \subsubsection{Members}
 
