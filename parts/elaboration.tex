@@ -10,7 +10,7 @@ In this section the order and strategy of elaboration of compilation steps will 
 	\item Global and Member aggregation: Collect names and types of visible entities defined in global scopes and type/class/... members.
     \item File-Import Resolution: Resolve imports, check for duplicate names in a scope, resolve all-imports. (does not include targets of imports and import expressions)
 	\item Create evaluation order for the next step; abort and report cycles if any.
-	\item Name, Type and Operator Resolution: Bind names, infer and check types, turn operator applications into calls.
+	\item Name, Type, Import Expression and Operator Resolution: Bind names, infer and check types, turn operator applications into calls.
     \item Removal of Unresolved expressions (i.e. check their absence?)
 	\item Property checks: Abstract, Native
 	\item Access Checks: Check visibility
@@ -19,6 +19,22 @@ In this section the order and strategy of elaboration of compilation steps will 
 	\item Shadow Checks: Calculate warnings for shadowed entities
 	\item IR generation: Create tl-file that can be passed to other compilations or the code generator.
 \end{enumerate}
+
+\subsection{Evaluation Order for Name Resolution}
+
+Path imports require that expressions used in the path can be evaluated.
+The problem with import paths and operator usage is that new types can be introduced by them and, hence, new dependencies can arise after definining an evaluation order.
+\todo{irgendwie habe ich gerade nicht das gefühl, dass das aufgeht; vermutlich muss man die regel aufstellen, dass es keine abhängikeit an das aktuelle modul geben darf, das wäre aber enttäuschend unscharf}
+
+
+\subsection{File-Import Resolution}
+
+Check for duplicates can be performed without knowing the targets of an import expression, because they end with the name that the target will be refered under.
+Names of declared entities are statically known anyway.
+
+
+\subparagraph{Note}
+ This step does not include duplicate names inside of block expressions.
 
 
 \subsection{Removal of Block Parameters}
