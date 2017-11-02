@@ -13,6 +13,28 @@ In order to examine consequences of TOP for resource management, Tyr features ma
 
 Type-level functions are descendants of C++ templates and Ada generics.
 
+\subsection{Milestone 1}
+The first milestone is the ability to proove the expression:
+\begin{verbatim}
+HList(Type) :: LiteralInt :: LiteralString <: HList(Type) :: int :: string 
+\end{verbatim}
+In consequence, the validity of method placements should be easily provable.
+The typing of funcitons should be something along the lines of
+\begin{verbatim}
+functionPointer <: pointer
+function(T- : Type)(args: HList(Type), r : T) <: functionPointer
+\end{verbatim}
+
+\subparagraph{Note to self:}
+The minimal type theory for this step is $<:, \tau, \forall^{+-}, \top, \bot$.
+The $\tau$ is not strictly required, but it would be pointless to start without type orientation.
+Top and bottom follow from variant inheritance.
+Lambdas are not required ever, and are unlikely to appear ever, as they require garbage collection for closures.
+
+\subparagraph{Note to self:}
+Ultimately, there will also be a type Function that holds a vtable and, hence, is an Object.
+This is similar to Int/int, Long/long, etc.
+
 
 \subsection{On OOP and TOP}
 
