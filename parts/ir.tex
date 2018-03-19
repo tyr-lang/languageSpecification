@@ -1,0 +1,115 @@
+\section{Tyr Intermediate Representation}
+
+
+\begin{lstlisting}[caption=Structure,language=skill]
+/**
+ * Any entity that can be the member of a scope.
+ */
+interface ScopeMember {
+  /**
+   * The parent of this member.
+   */
+  Scope parent;
+}
+
+/**
+ * A static structure that can contain other static entities.
+ */
+Scope with ScopeMember {
+
+  /* members of this scope can be computed by adding them to their parents */
+  auto set<ScopeMember> members;
+
+  /* the name of this scope */
+  string name;
+}
+
+/**
+ * The root scope as seen from this package.
+ */
+@singleton
+RootScope extends Scope {
+}
+
+/**
+ * The description of this package.
+ */
+@singleton
+PackageInfo {
+  /**
+   * The name of the package as array of its parts.
+   *
+   * @note example: tyr.lang -> ["tyr", "lang"]
+   */
+  string[] name;
+
+  /**
+   * root scope of this package.
+   */
+  Scope packageRoot;
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=Types,language=skill]
+/**
+ * the actual type of an entity
+ * @note no copy of a semantically equivalent type may exist
+ */
+interface Type {}
+
+/**
+ * A static type
+ */
+StaticType extends Scope with Type {
+  StaticType super;
+
+  Field[] fields;
+  Function[] methods;
+}
+
+/* a simple type usage such as "int" */
+DirectType extends Type {
+  StaticType target;
+}
+
+/* a type resulting from an expression */
+AnonymousType extends Type {
+  
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=Members,language=skill]
+@abstract
+Field with ScopeMember {
+  Type type;
+  String name;
+}
+
+/* mutable fields */
+Var extends Field {}
+
+/* immutable fields */
+Val extends Field {}
+
+Function with ScopeMember {
+}
+
+Test with ScopeMember {
+  string name;
+  Block code;
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=Expressions,language=skill]
+@abstract
+Expression {
+  Type type;
+}
+
+StaticAccess extends Expression {
+  ScopeMember target;
+}
+\end{lstlisting}
