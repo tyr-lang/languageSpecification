@@ -110,6 +110,32 @@ int.`-`(7) == -7;
 int.`-` 7 == -7;  // name resolution error?
 \end{lstlisting}
 
+\subsection{Asignment Operator}
+
+Every type implicitly has a right-associative operator \texttt{=} with precedence 20 that implements assignment.
+The argument type can be of any subtype of this.type and the result type and value is taken from the assignment, because it is more specific.
+Hence, it is possible to do the following:
+\begin{lstlisting}[language=tyr]
+var x : int = 0
+var y : literalInteger(32) = 0
+y = x = 1
+\end{lstlisting}
+
+\subsection{InstanceOf Operator}
+
+Every type implicitly has a left-associative operator \texttt{<:} with precedence 90 that implements dynamic\footnote{The result may be evaluated at compile-time.} type-checking.
+The argument type can be any type and the result is \texttt{bool}.
+The result is true iff the dynamic type of the value of the left argument is a equal to or a subtype of the dynamic type represented by the right argument.
+
+\todo{a warning shall be generated if the result is always false}
+
+Hence, it is possible to do the following:
+\begin{lstlisting}[language=tyr]
+var x : int = 0
+var y = x <: 0.type // y == false, as !(int <: literalInteger(32))
+var z = literalInteger(32) <: int // z == false
+var z = literalInteger(32) <: int.type // z == true
+\end{lstlisting}
 
 \subsection{Types and Classes}
 
