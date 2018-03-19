@@ -183,11 +183,11 @@ class Object <: pointer
 
 \section{Collections}
 
-IterableOnce(T : Type)
+IterableOnce(T+ : Type)
 - static def for (p, b)
 - def foreach (f : LocalLambda[-> T])
 
-Iterator <: IterableOnce
+Iterator(T+) <: IterableOnce(T+)
 - empty()
 - move() : bool
 - get()
@@ -201,25 +201,28 @@ MinimalEQR <: EquivalenceRelation
 - equals := ==
 - hash := .to(Int)
 
-Iterable <: IterableOnce
+Iterable(T+) <: IterableOnce(T)
 
-Seq <: Iterable
+Seq(T+) <: Iterable(T)
 
-Array <: Seq
+Array(T) <: Seq(T)
 
-ArrayBuffer <: Seq
+ArrayBuffer(T) <: Seq(T)
 
 StringBuffer <: Seq(String)
 
-List <: Seq
+List(T) <: Seq(T)
 
-LinkedList <: List
+LinkedList(T) <: List(T)
 
-Set <: Seq
+Set(T) <: Seq(T)
+
+HList(T+) <: Seq(T)
+
 
 HashSet(T : Type <: CT, Eq : Type(EquivalenceRelation) <: CT = MinimalEQR) <: Set
 
-Map <: Iterable
+Map(K,V) <: Iterable(struct(K,V))
 
 HashMap(K : Type <: CT, V : Type <: CT, Eq : Type(EquivalenceRelation(K)) <: CT) <: Set
 
