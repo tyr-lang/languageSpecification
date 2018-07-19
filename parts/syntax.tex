@@ -6,13 +6,15 @@ The syntax of Tyr is inspired by Scala and SKilL.
 
 Keywords in Tyr are:
 \begin{center}
-do
-	\quad def
+class
+	\quad do
+    \quad def
 	\quad else
 	\quad for
 	\quad if
 	\quad return
-	\quad val
+	\quad type
+    \quad val
 	\quad var
 	\quad while
 	\quad with
@@ -27,11 +29,9 @@ Operator Keywords are:
 Keywords can in no context be used as identifiers or operators.
 They can be made available by using literal identifiers.
 
-Operators and identifiers are can name function declarations that are treated diffirently when it comes to their invocation.
+Operators and identifiers can name function declarations that are treated differently when it comes to their invocation.
 There are no other differences.
 Literal identifiers containing only operator symbols can be matched by equivalent operator invocations in an expression.
-
-Note that identifiers like \texttt{type} or \texttt{class} can be used as identifiers because they can only appear in situations where other identifiers are illegal.
 
 \subsection{Literals}
 
@@ -102,13 +102,13 @@ Note that identifiers like \texttt{type} or \texttt{class} can be used as identi
 \subsection{Examples}
 
 \begin{lstlisting}[language=tyr]
-def foreach (p : BlockParameter(Any), b : Block(void)) {
+def foreach (p : BlockParameter[any], b : Block[void]) {
   while(move()) {
 	p = get();
 	b();
   }
 }
-def forall (p : BlockParameter(Any), b : Block(bool)) : bool = {
+def forall (p : BlockParameter[any], b : Block[bool]) : bool = {
   while(move()) {
     p = get();
     if(!b())

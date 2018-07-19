@@ -3,11 +3,12 @@
 The semantics of Tyr is loosely based on C++ and Scala.
 
 \subsection{Types of literal Values}
-\todo{sind die ints nicht in wahrheit LiteralInt?}
+\todo{das stimmt so nicht mehr; die aktuelle Regel ist aber imo besser}
+\todo{man sollte erwähnen, dass 0i32 <: int gilt}
 
 The type of <Integer> is \texttt{int}, if no 'i' or no number behind the 'i' is supplied.
 If a number is supplied, the number will be used as argument for \texttt{Integer}(n).
-If the resulting Type has a named subtype in \texttt{tyr.lang}, the subtype will be chosen.
+If the resulting type has a named subtype in \texttt{tyr.lang}, the subtype will be chosen.
 Hence, \texttt{0i8} is a \texttt{byte} of value 0.
 Also, \texttt{0}, \texttt{0i} and \texttt{0i32} are indistinguishable.
 
@@ -117,7 +118,7 @@ The argument type can be of any subtype of this.type and the result type and val
 Hence, it is possible to do the following:
 \begin{lstlisting}[language=tyr]
 var x : int = 0
-var y : literalInteger(32) = 0
+var y : literalInteger[32] = 0
 y = x = 1
 \end{lstlisting}
 

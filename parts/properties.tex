@@ -35,7 +35,7 @@ Type parameters.
 
 \subsubsection{contravariant}
 
-$\texttt{type T(V : Type <: covariant)} \Rightarrow \forall u,v \in \texttt{Type}. u <: v \Rightarrow T(v) <: T(u)$.
+$\texttt{type T(V : Type <: contravariant)} \Rightarrow \forall u,v \in \texttt{Type}. u <: v \Rightarrow T(v) <: T(u)$.
 This means that results of a type-level function use an inheritance hierarchy that equals the opposite of their arguments.
 
 \paragraph{Usage Restrictions}

@@ -5,12 +5,11 @@ In this section the order and strategy of elaboration of compilation steps will 
 \subsection{Overview of Phases}
 
 \begin{enumerate}
-	\item Parsing: per pile (text -> AST)
+	\item Parsing: per file (text -> AST)
 	\item Module AST: merge ASTs into a module AST
 	\item Global and Member aggregation: Collect names and types of visible entities defined in global scopes and type/class/... members.
     \item File-Import Resolution: Resolve imports, check for duplicate names in a scope, resolve all-imports. (does not include targets of imports and import expressions)
-	\item Create evaluation order for the next step; abort and report cycles if any.
-	\item Name, Type, Import Expression and Operator Resolution: Bind names, infer and check types, turn operator applications into calls.
+	\item Name, Type, Import Expression and Operator Resolution: Bind names, infer and check types, turn operator applications into calls. \todo{Das hier ist eine bedarfsgetriebene evaluation von etwas, das in traditionellen Compilern in mehreren pässen erledigt werden würde}
     \item Removal of Unresolved expressions (i.e. check their absence?)
 	\item Property checks: Abstract, Native
 	\item Access Checks: Check visibility
