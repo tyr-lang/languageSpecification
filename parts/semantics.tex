@@ -2,6 +2,37 @@
 
 The semantics of Tyr is loosely based on C++ and Scala.
 
+\subsection{Sorts}
+
+Types in Tyr are split into five sorts: properties, interfaces, value types, types and classes.
+The sort of properties is independent of all other sorts.
+Interfaces are the only secondary sort.
+All remaining sorts are primary sorts.
+
+The sort of value types, i.e. type originating from \verb+val type+ declarations, forms the top of the hierarchy.
+Types and classes can inherit from their own sort or from value types.
+
+An interface may inherit from any primary sort.
+
+If a class does not explicitly inherit from a primary sort, it implicitly inherits from \texttt{tyr.lang.Object}.
+If a non-class does not explicitly inherit from a primary sort, it implicitly inherits from \texttt{tyr.lang.any}.
+
+Members from primary and secondary sorts may inherit from an arbitrary amount of interfaces, as long as all transitively inherited primary sorts form a legal line of inheritance.
+The lowest type in that line is the actual super type, even if it is more specific than the declared super type.
+
+\subparagraph{Note} A warning shall be issued if the actual super type is more specific than an explicitly declared super type.
+
+
+
+%draw picture:
+% properties
+%
+% type -> val type <- class
+%  A         A          A
+%  |         |          |
+%  +---- interface -----+
+
+
 \subsection{Types of literal Values}
 \todo{das stimmt so nicht mehr; die aktuelle Regel ist aber imo besser}
 \todo{man sollte erwähnen, dass 0i32 <: int gilt}
@@ -121,6 +152,8 @@ var x : int = 0
 var y : literalInteger[32] = 0
 y = x = 1
 \end{lstlisting}
+
+If an applicable operator \texttt{=} is visible, the implicit assignment operator is shadowed ignoring precedence.
 
 \subsection{InstanceOf Operator}
 
