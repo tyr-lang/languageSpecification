@@ -9,8 +9,8 @@ The sort of properties is independent of all other sorts.
 Interfaces are the only secondary sort.
 All remaining sorts are primary sorts.
 
-The sort of value types, i.e. type originating from \verb+val type+ declarations, forms the top of the hierarchy.
-Types and classes can inherit from their own sort or from value types.
+The sort of value types, i.e. type originating from \verb+type+ declarations, forms the top of the hierarchy.
+Types originating from \verb+var type+ and classes can inherit from their own sort or from value types.
 
 An interface may inherit from any primary sort.
 
@@ -27,10 +27,10 @@ The lowest type in that line is the actual super type, even if it is more specif
 %draw picture:
 % properties
 %
-% type -> val type <- class
-%  A         A          A
-%  |         |          |
-%  +---- interface -----+
+% var type -> type <- class
+%  A           A         A
+%  |           |         |
+%  +------ interface ----+
 
 
 \subsection{Types of literal Values}
