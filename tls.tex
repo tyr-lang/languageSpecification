@@ -207,6 +207,9 @@ Seq(T+) <: Iterable(T)
 
 Array(T) <: Seq(T)
 
+// can be a singleton for any T
+EmptyArray(T) <: Array(T)
+
 ArrayBuffer(T) <: Seq(T)
 
 StringBuffer <: Seq(String)
