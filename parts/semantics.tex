@@ -155,6 +155,8 @@ y = x = 1
 
 If an applicable operator \texttt{=} is visible, the implicit assignment operator is shadowed ignoring precedence.
 
+\todo{Assignment to a val in a Constructor results in an FBOL and cannot be nested.}
+
 \subsection{InstanceOf Operator}
 
 Every type implicitly has a left-associative operator \texttt{<:} with precedence 90 that implements dynamic\footnote{The result may be evaluated at compile-time.} type-checking.
@@ -171,6 +173,13 @@ var z = literalInteger(32) <: int // z == false
 var z = literalInteger(32) <: int.type // z == true
 \end{lstlisting}
 
+
+\subsection{Representation of Types}
+
+A type application is the representation of a type.
+It can be equivalent to a direct usage of a type instance; in that case, the source of the instance is the source type application is the representative of the equivalence class.
+
+
 \subsection{Types and Classes}
 
 \subsubsection{Representation of Objects}
@@ -186,6 +195,36 @@ The dynamic type of an expression can be accessed via the field \texttt{class}.
 The dynamic type is only available for Objects.
 In a type safe program, the statement $\forall x. x\texttt{.class} <: x\texttt{.type}$ is true.
 For the sake of symmetry, expressions argument to an access of \texttt{type} will be evaluated.
+
+
+\subsubsection{Representation of Classes}
+
+Classes, i.e. the objects representing the type of an instance of a class type, have an inexpressible polymorphic representation.
+The first element of an object is a pointer to its type.
+A class is an object, hence the rule applies to classes as well.
+
+The second element of a Class is a pointer to the ITable.
+
+Representations of classes and types are a co-Hierarchy to their defined counterparts.
+Members with \texttt{class} lifetime behave like their object counterparts except that they target the class.
+
+Both object and class defs translate to function pointer value fields in the class.
+If a def is overriden, the overriding constructor replaces the value assigned by a super constructor rather than adding a new field.
+
+Classes are created by the package initializer in arbitrary topological order.
+Class constructors may not make use of non-native types other than their super types and interfaces.
+
+Note: As soon as there is type-sealing, optimizing non-dispatching members to global entities should be legalized.
+
+
+\subsubsection{Overriding of Fields}
+
+Overriding of fields is covariant, as access via get to an overriden field requires dynamic type checking, which cannot be inserted for already compiled super types (hence no contra variance).
+
+A practical example of field overriding are pointers between co-hierarchies such as object-type descriptions.
+An object description points to a type description, whereas a function descriptions has this pointer pointing to a function type description.
+The same holds for declaration-definition co-hierarchies.
+
 
 \subsection{Tests}
 
